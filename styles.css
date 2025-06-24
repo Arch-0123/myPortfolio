@@ -1,0 +1,158 @@
+#floating-element {
+  position: absolute; /* Required for absolute positioning */
+  transform-origin: center center; /* Ensures scaling from the center */
+  
+}
+
+#image-container img {
+  display: none;
+}
+
+#image-container img:nth-child(1) {
+  display: block;
+}
+
+.image-container {
+  width: 200px; /* Adjust as needed */
+  height: 200px; /* Adjust as needed */
+  overflow: hidden;
+}
+
+.image-container img {
+  position: absolute;
+  animation: imageCycle 4s linear infinite; /* Adjust duration and timing function */
+}
+
+@keyframes imageCycle {
+  0% { top: 0; }
+  25% { top: -200px; } /* Adjust height to match image height */
+  50% { top: -400px; } /* Adjust height to match image height */
+  75% { top: -600px; } /* Adjust height to match image height */
+  100% { top: 0; }
+}
+
+
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+    
+}
+.banner{
+    width: 100%;
+    height: 100%;
+    background-position: center;
+    
+}
+.navbar{
+    width: 90%;
+    padding: 30;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    
+}
+
+.logo{
+    width: 160px;
+    margin-top: -10px;
+    cursor: pointer
+}
+
+.navbar ul li{
+    color: white;
+    list-style: none;
+    display: inline-block;
+    margin: 20px;
+        
+}
+
+.navbar{
+    text-decoration: none;
+    text-transform: uppercase;
+    color: white;
+    font-weight: 600;
+    padding: 15px;
+
+
+    
+}
+li a:hover{
+    background: #fdf7f7;
+    transition: 0.5s;
+}
+.navbar a:hover{
+    color: black;
+    
+}
+
+.content{
+    width: 100%;
+    position: absolute;
+    color: white;
+    top: 45%;
+    transform: translateY(-50%);
+    text-align: center;
+    
+}
+
+.content h2{
+    margin-top: 80px;
+    margin-bottom: 1px;
+    margin-right: 700px;
+    font-size: 29;
+    font-weight: 600;
+
+
+}
+
+.content h1{
+    margin-top: 1px;
+    font-size: 180px;
+    font-weight: 900;
+    color: white;
+    
+}
+
+button{
+    width: 200px;
+    padding: 15px;
+    margin: 20px 5px;
+    text-align: center;
+    border-radius: 25px;
+    color: black;
+    border: 2px;
+    font-size: 20px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+button:hover{
+    background: rgb(0,155,226);
+    transition: 0.5s;
+    
+}
+
+button:hover{
+    color: white;
+    transition: 0.5s;
+}
+
+.banner video{
+    position: absolute;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: -1;
+    
+}
+
+@media(min-aspect-ratio: 16/9) {
+    .banner video{
+        width: 100%;
+        height: auto;
+        
+    }
+}
