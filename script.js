@@ -16,7 +16,7 @@ window.addEventListener('load', () => {
   // Function for continuous floating
   function floatElement() {
     const { x, y } = randomFloat();
-    gsap.to(element, { duration: 5, x, y, ease: "power1.inOut", onComplete: floatElement });
+    gsap.to(element, { duration: 10, x, y, ease: "power1.inOut", onComplete: floatElement });
   }
 
   // Start floating after the zoom is complete
