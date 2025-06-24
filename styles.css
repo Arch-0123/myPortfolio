@@ -4,32 +4,6 @@
   
 }
 
-#image-container img {
-  display: none;
-}
-
-#image-container img:nth-child(1) {
-  display: block;
-}
-
-.image-container {
-  width: 200px; /* Adjust as needed */
-  height: 200px; /* Adjust as needed */
-  overflow: hidden;
-}
-
-.image-container img {
-  position: absolute;
-  animation: imageCycle 4s linear infinite; /* Adjust duration and timing function */
-}
-
-@keyframes imageCycle {
-  0% { top: 0; }
-  25% { top: -200px; } /* Adjust height to match image height */
-  50% { top: -400px; } /* Adjust height to match image height */
-  75% { top: -600px; } /* Adjust height to match image height */
-  100% { top: 0; }
-}
 
 
 *{
