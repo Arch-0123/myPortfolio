@@ -1,5 +1,5 @@
 #floating-element {
-  position: absolute; /* Required for absolute positioning */
+  position: center; /* Required for absolute positioning */
   transform-origin: center center; /* Ensures scaling from the center */
   
 }
