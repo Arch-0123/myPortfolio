@@ -1,83 +1,219 @@
-window.addEventListener('load', () => {
-    // Mobile menu toggle
-    const hamburger = document.querySelector('.hamburger');
-    const navLinks = document.querySelector('.nav-links');
-    
-    hamburger.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-        hamburger.classList.toggle('active');
-    });
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-    // Smooth scrolling for nav links
-    document.querySelectorAll('.nav-link').forEach(link => {
-        link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href');
-            document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
-            navLinks.classList.remove('active');
-            hamburger.classList.remove('active');
-        });
-    });
+body {
+    font-family: 'Orbitron', sans-serif;
+    overflow-x: hidden;
+}
 
-    // Floating astronaut animation
-    const element = document.getElementById('floating-element');
-    const astronaut = document.querySelector('#astronaut-container1 img');
-    
-    // Responsive astronaut size
-    function updateAstronautSize() {
-        const width = window.innerWidth;
-        astronaut.style.width = width > 768 ? '120px' : '80px';
-        astronaut.style.height = width > 768 ? '120px' : '80px';
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    overflow: hidden;
+}
+
+.banner video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+
+.navbar {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 1rem 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 1000;
+    background: rgba(0,0,0,0.3);
+    backdrop-filter: blur(10px);
+}
+
+.logo {
+    width: 120px;
+    height: auto;
+    cursor: pointer;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background: rgba(255,255,255,0.2);
+    color: #00d4ff;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 4px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: white;
+    transition: 0.3s;
+}
+
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: white;
+    z-index: 10;
+}
+
+.content h2 {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 600;
+    margin-bottom: 1rem;
+    opacity: 0.9;
+}
+
+.content h1 {
+    font-size: clamp(4rem, 12vw, 10rem);
+    font-weight: 900;
+    margin: 0.5rem 0;
+    letter-spacing: 0.1em;
+}
+
+.content h1 span {
+    display: inline-block;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px #00d4ff; }
+    to { text-shadow: 0 0 30px #00d4ff, 0 0 40px #00d4ff; }
+}
+
+.explore-btn {
+    width: 200px;
+    padding: 1rem;
+    margin-top: 2rem;
+    border: 2px solid #00d4ff;
+    background: transparent;
+    color: #00d4ff;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    text-transform: uppercase;
+}
+
+.explore-btn:hover {
+    background: #00d4ff;
+    color: black;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(0,212,255,0.4);
+}
+
+/* Sections */
+.section {
+    padding: 5rem 5%;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+h2 {
+    text-align: center;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 3rem;
+    color: #fff;
+    text-shadow: 0 0 20px rgba(0,212,255,0.5);
+}
+
+/* Floating Element */
+#floating-element {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    z-index: 5;
+}
+
+#astronaut-container1 img {
+    width: 100px;
+    height: 100px;
+    object-fit: contain;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(0,0,0,0.95);
+        flex-direction: column;
+        padding: 1rem;
+        gap: 0;
     }
-    updateAstronautSize();
-    window.addEventListener('resize', updateAstronautSize);
 
-    // Initial zoom animation
-    gsap.set(element, { scale: 0, opacity: 0 });
-    gsap.to(element, { 
-        duration: 1.5, 
-        scale: 1, 
-        opacity: 1, 
-        ease: "back.out(1.7)" 
-    });
-
-    // Continuous floating animation
-    function floatAstronaut() {
-        const maxX = window.innerWidth - 120;
-        const maxY = window.innerHeight - 120;
-        const randomX = (Math.random() - 0.5) * maxX * 0.8;
-        const randomY = (Math.random() - 0.5) * maxY * 0.8;
-        
-        gsap.to('#astronaut-container1', { 
-            duration: 15 + Math.random() * 10,
-            x: randomX,
-            y: randomY,
-            rotation: Math.random() * 360,
-            ease: "power1.inOut",
-            onComplete: floatAstronaut
-        });
+    .nav-links.active {
+        display: flex;
     }
 
-    // Start floating after zoom
-    gsap.to(element, { 
-        duration: 0.1, 
-        onComplete: floatAstronaut 
-    });
+    .hamburger {
+        display: flex;
+    }
 
-    // Button hover effect
-    document.querySelector('.explore-btn').addEventListener('mouseenter', () => {
-        gsap.to('.explore-btn', { scale: 1.05, duration: 0.3 });
-    });
-    document.querySelector('.explore-btn').addEventListener('mouseleave', () => {
-        gsap.to('.explore-btn', { scale: 1, duration: 0.3 });
-    });
+    .content {
+        padding: 0 2rem;
+    }
 
-    // Parallax effect on scroll
-    window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        gsap.to('#astronaut-container1', {
-            y: scrolled * 0.5,
-            duration: 0.5
-        });
-    });
-});
+    .content h2 {
+        margin-right: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding: 1rem 3%;
+    }
+    
+    .logo {
+        width: 100px;
+    }
+}
