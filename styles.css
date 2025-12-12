@@ -1,132 +1,83 @@
-#floating-element {
-  position: absolute; /* Required for absolute positioning */
-  transform-origin: center center; /* Ensures scaling from the center */
-  
-}
-
-
-
-*{
-    margin: 0;
-    padding: 0;
-    font-family: sans-serif;
-    box-sizing: border-box;
+window.addEventListener('load', () => {
+    // Mobile menu toggle
+    const hamburger = document.querySelector('.hamburger');
+    const navLinks = document.querySelector('.nav-links');
     
-}
-.banner{
-    width: 100%;
-    height: 100%;
-    background-position: center;
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+        hamburger.classList.toggle('active');
+    });
+
+    // Smooth scrolling for nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            document.querySelector(targetId)?.scrollIntoView({ behavior: 'smooth' });
+            navLinks.classList.remove('active');
+            hamburger.classList.remove('active');
+        });
+    });
+
+    // Floating astronaut animation
+    const element = document.getElementById('floating-element');
+    const astronaut = document.querySelector('#astronaut-container1 img');
     
-}
-.navbar{
-    width: 90%;
-    padding: 30;
-    margin: auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    
-}
-
-.logo{
-    width: 160px;
-    margin-top: -10px;
-    cursor: pointer
-}
-
-.navbar ul li{
-    color: white;
-    list-style: none;
-    display: inline-block;
-    margin: 20px;
-        
-}
-
-.navbar{
-    text-decoration: none;
-    text-transform: uppercase;
-    color: white;
-    font-weight: 600;
-    padding: 15px;
-
-
-    
-}
-li a:hover{
-    background: #fdf7f7;
-    transition: 0.5s;
-}
-.navbar a:hover{
-    color: black;
-    
-}
-
-.content{
-    width: 100%;
-    position: absolute;
-    color: white;
-    top: 45%;
-    transform: translateY(-50%);
-    text-align: center;
-    
-}
-
-.content h2{
-    margin-top: 80px;
-    margin-bottom: 1px;
-    margin-right: 700px;
-    font-size: 29;
-    font-weight: 600;
-
-
-}
-
-.content h1{
-    margin-top: 1px;
-    font-size: 180px;
-    font-weight: 900;
-    color: white;
-    
-}
-
-button{
-    width: 200px;
-    padding: 15px;
-    margin: 20px 5px;
-    text-align: center;
-    border-radius: 25px;
-    color: black;
-    border: 2px;
-    font-size: 20px;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-button:hover{
-    background: rgb(0,155,226);
-    transition: 0.5s;
-    
-}
-
-button:hover{
-    color: white;
-    transition: 0.5s;
-}
-
-.banner video{
-    position: absolute;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    z-index: -1;
-    
-}
-
-@media(min-aspect-ratio: 16/9) {
-    .banner video{
-        width: 100%;
-        height: auto;
-        
+    // Responsive astronaut size
+    function updateAstronautSize() {
+        const width = window.innerWidth;
+        astronaut.style.width = width > 768 ? '120px' : '80px';
+        astronaut.style.height = width > 768 ? '120px' : '80px';
     }
-}
+    updateAstronautSize();
+    window.addEventListener('resize', updateAstronautSize);
+
+    // Initial zoom animation
+    gsap.set(element, { scale: 0, opacity: 0 });
+    gsap.to(element, { 
+        duration: 1.5, 
+        scale: 1, 
+        opacity: 1, 
+        ease: "back.out(1.7)" 
+    });
+
+    // Continuous floating animation
+    function floatAstronaut() {
+        const maxX = window.innerWidth - 120;
+        const maxY = window.innerHeight - 120;
+        const randomX = (Math.random() - 0.5) * maxX * 0.8;
+        const randomY = (Math.random() - 0.5) * maxY * 0.8;
+        
+        gsap.to('#astronaut-container1', { 
+            duration: 15 + Math.random() * 10,
+            x: randomX,
+            y: randomY,
+            rotation: Math.random() * 360,
+            ease: "power1.inOut",
+            onComplete: floatAstronaut
+        });
+    }
+
+    // Start floating after zoom
+    gsap.to(element, { 
+        duration: 0.1, 
+        onComplete: floatAstronaut 
+    });
+
+    // Button hover effect
+    document.querySelector('.explore-btn').addEventListener('mouseenter', () => {
+        gsap.to('.explore-btn', { scale: 1.05, duration: 0.3 });
+    });
+    document.querySelector('.explore-btn').addEventListener('mouseleave', () => {
+        gsap.to('.explore-btn', { scale: 1, duration: 0.3 });
+    });
+
+    // Parallax effect on scroll
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        gsap.to('#astronaut-container1', {
+            y: scrolled * 0.5,
+            duration: 0.5
+        });
+    });
+});
