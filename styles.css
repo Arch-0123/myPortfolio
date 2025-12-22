@@ -1,219 +1,210 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Page layout */
+html, body {
+  height: 100%;
+  margin: 0;
 }
-
 body {
-    font-family: 'Orbitron', sans-serif;
-    overflow-x: hidden;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  font-family: system-ui, sans-serif;
 }
 
-.banner {
-    position: relative;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-    overflow: hidden;
+/* Ambient gradient glow */
+.ambient {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(60vmin 60vmin at 15% 50%, rgba(255,150,60,0.18), transparent 60%),
+              radial-gradient(60vmin 60vmin at 85% 50%, rgba(90,160,255,0.18), transparent 60%);
+  z-index: 0;
+  filter: blur(12px);
 }
 
-.banner video {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    z-index: -1;
+/* Robot container */
+.robot {
+  position: relative;
+  width: 220px;
+  height: 360px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
 }
 
-.navbar {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    padding: 1rem 5%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    z-index: 1000;
-    background: rgba(0,0,0,0.3);
-    backdrop-filter: blur(10px);
+/* Head shell with 75% cut and curved lower edge */
+.head-shell {
+  width: 160px;
+  height: 120px;               /* taller head, about 75% of body height */
+  background: #fff;
+  /* Rounded top corners, curved lower edge */
+  border-top-left-radius: 80px;
+  border-top-right-radius: 80px;
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
+  position: relative;
+  box-shadow: inset 0 -6px 16px rgba(180,180,180,0.35),
+              0 8px 24px rgba(0,0,0,0.35);
+  margin-bottom: 1px;         /* spacing between head and body */
 }
 
-.logo {
-    width: 120px;
-    height: auto;
-    cursor: pointer;
+/* Face visor adjusted to fit inside */
+.face {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120px;
+  height: 75px;                /* taller visor to match head’s new cut */
+  transform: translate(-50%, -50%);
+  background: #000;
+  border-top-left-radius: 60px;
+  border-top-right-radius: 60px;
+  border-bottom-left-radius: 25%;
+  border-bottom-right-radius: 25%;
+  box-shadow: inset 0 0 24px rgba(0,255,255,0.25);
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
 }
 
-.nav-links {
-    display: flex;
-    list-style: none;
-    gap: 2rem;
+/* Eyes */
+.eye-holder {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  animation: blink 5.5s infinite;
+}
+.eye-holder.right { animation-delay: 0.2s; }
+
+.pupil {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00d9ff;
+  box-shadow: 0 0 10px #00d9ff, 0 0 18px rgba(0,217,255,0.6);
+  transform: translate(0,0);
+  transition: transform 60ms ease-out;
 }
 
-.nav-link {
-    color: white;
-    text-decoration: none;
-    text-transform: uppercase;
-    font-weight: 600;
-    font-size: 0.9rem;
-    padding: 0.5rem 1rem;
-    border-radius: 25px;
-    transition: all 0.3s ease;
+/* Body as a large circle */
+.body {
+  width: 250px;              /* bigger width */
+  height: 250px;             /* equal height for circle */
+  background: #fff;
+  border-radius: 50%;        /* perfect circle */
+  position: relative;
+  margin-top: 10px;          /* spacing below head */
+  box-shadow: inset 0 -10px 22px rgba(180,180,180,0.35),
+              0 14px 28px rgba(0,0,0,0.35);
 }
 
-.nav-link:hover {
-    background: rgba(255,255,255,0.2);
-    color: #00d4ff;
+
+/* Arms as smooth curved cones */
+.arm {
+  position: absolute;
+  top: 10%;                 /* shoulder level */
+  width: 60px;              /* wider base */
+  height: 140px;            /* longer arm */
+  background: #fff;
+  border-radius: 50% 50% 40% 40% / 60% 60% 20% 20%;
+  /* top corners more rounded, bottom slightly curved */
+  transform-origin: top center;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
 }
 
-.hamburger {
-    display: none;
-    flex-direction: column;
-    cursor: pointer;
-    gap: 4px;
+.arm.left { left: -20px; }   /* farther from body */
+.arm.right { right: -80px; } /* farther from body */
+
+.arm.wave {
+  animation: wave 1.8s ease-in-out;
 }
 
-.hamburger span {
-    width: 25px;
-    height: 3px;
-    background: white;
-    transition: 0.3s;
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-12deg); }
+  55% { transform: rotate(18deg); }
+  100% { transform: rotate(0deg); }
 }
 
-.content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: white;
-    z-index: 10;
+.arm.left { left: -14px; }
+.arm.right { right: -14px; }
+
+.arm.wave { animation: wave 1.8s ease-in-out; }
+
+/* Animations */
+@keyframes wave {
+  0% { transform: rotate(0deg); }
+  20% { transform: rotate(-18deg); }
+  55% { transform: rotate(22deg); }
+  100% { transform: rotate(0deg); }
 }
 
-.content h2 {
-    font-size: clamp(1.2rem, 3vw, 2rem);
-    font-weight: 600;
-    margin-bottom: 1rem;
-    opacity: 0.9;
+@keyframes blink {
+  0%, 88%, 100% { opacity: 1; }
+  90% { opacity: 0.1; }
+  92% { opacity: 1; }
+}
+/* Chest logo circle with A */
+.chest-logo {
+  position: absolute;
+  top: 25%;                /* vertical placement on chest */
+  right: 10%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  background: #000;        /* circle background */
+  border-radius: 50%;      /* perfect circle */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: #00d9ff;          /* glowing cyan letter */
+  box-shadow: 0 0 12px #00d9ff, 0 0 24px rgba(0,217,255,0.6);
+}
+/* Eyes */
+.eye-holder {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  animation: blink 5.5s infinite;
+  overflow: hidden; /* allows arc shaping */
+}
+.eye-holder.right { animation-delay: 0.2s; }
+
+.pupil {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00d9ff;
+  box-shadow: 0 0 10px #00d9ff, 0 0 18px rgba(0,217,255,0.6);
+  transform: translate(0,0);
+  transition: transform 60ms ease-out;
 }
 
-.content h1 {
-    font-size: clamp(4rem, 12vw, 10rem);
-    font-weight: 900;
-    margin: 0.5rem 0;
-    letter-spacing: 0.1em;
+/* Eye smile animation */
+.eye-smile {
+  animation: smile 2s ease-in-out forwards;
 }
 
-.content h1 span {
-    display: inline-block;
-    animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 20px #00d4ff; }
-    to { text-shadow: 0 0 30px #00d4ff, 0 0 40px #00d4ff; }
-}
-
-.explore-btn {
-    width: 200px;
-    padding: 1rem;
-    margin-top: 2rem;
-    border: 2px solid #00d4ff;
-    background: transparent;
-    color: #00d4ff;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.5s ease;
-    text-transform: uppercase;
-}
-
-.explore-btn:hover {
-    background: #00d4ff;
-    color: black;
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(0,212,255,0.4);
-}
-
-/* Sections */
-.section {
-    padding: 5rem 5%;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-}
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    width: 100%;
-}
-
-h2 {
-    text-align: center;
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    margin-bottom: 3rem;
-    color: #fff;
-    text-shadow: 0 0 20px rgba(0,212,255,0.5);
-}
-
-/* Floating Element */
-#floating-element {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    pointer-events: none;
-    z-index: 5;
-}
-
-#astronaut-container1 img {
-    width: 100px;
-    height: 100px;
-    object-fit: contain;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .nav-links {
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: rgba(0,0,0,0.95);
-        flex-direction: column;
-        padding: 1rem;
-        gap: 0;
-    }
-
-    .nav-links.active {
-        display: flex;
-    }
-
-    .hamburger {
-        display: flex;
-    }
-
-    .content {
-        padding: 0 2rem;
-    }
-
-    .content h2 {
-        margin-right: 0;
-    }
-}
-
-@media (max-width: 480px) {
-    .navbar {
-        padding: 1rem 3%;
-    }
-    
-    .logo {
-        width: 100px;
-    }
+@keyframes smile {
+  0% {
+    border-radius: 50%;
+    transform: scaleY(1);
+  }
+  50% {
+    border-radius: 50%/100%; /* squashed vertically */
+    transform: scaleY(0.5);  /* arc shape */
+  }
+  100% {
+    border-radius: 50%/100%;
+    transform: scaleY(0.5);
+  }
 }
