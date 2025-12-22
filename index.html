@@ -1,88 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyPortfolio</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8" />
+  <title>EVE Robot</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <div class="banner">
-        <video autoplay loop muted playsinline>
-            <source src="resources/space.mp4" type="video/mp4">
-        </video>
-        <div class="navbar">
-            <img class="logo" src="resources/logo.png" alt="Logo">
-            <ul class="nav-links">
-                <li><a href="#home" class="nav-link">Home</a></li>
-                <li><a href="#works" class="nav-link">My Works</a></li>
-                <li><a href="#about" class="nav-link">Who I Am</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+  <div class="ambient"></div>
+
+  <div class="robot">
+    <div class="head-shell">
+      <div class="face">
+        <div class="eye-holder left">
+          <div class="pupil" id="pupilLeft"></div>
         </div>
-        <div class="content">
-            <h2>WELCOME TO MY</h2>
-            <h1>
-                <span>S</span><span>P</span><span>A</span><span>C</span><span>E</span>
-            </h1>
-            <div class="btn-container">
-                <button class="explore-btn" type="button">Explore</button>
-            </div>
+        <div class="eye-holder right">
+          <div class="pupil" id="pupilRight"></div>
         </div>
+      </div>
     </div>
 
-    <!-- About Section -->
-    <section id="about" class="section">
-        <div class="container">
-            <h2>About Me</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <h3>Hi, I'm Your Name</h3>
-                    <p>Passionate full-stack developer with 3+ years of experience building responsive web applications using modern technologies. I specialize in creating immersive user experiences with creative animations and cutting-edge design.</p>
-                    <div class="skills">
-                        <span>HTML/CSS/JS</span>
-                        <span>React</span>
-                        <span>Node.js</span>
-                        <span>GSAP</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Works Section -->
-    <section id="works" class="section">
-        <div class="container">
-            <h2>My Works</h2>
-            <div class="projects-grid">
-                <div class="project-card">
-                    <h3>Project 1</h3>
-                    <p>Interactive Space Dashboard</p>
-                    <a href="#" class="project-link">View Project</a>
-                </div>
-                <div class="project-card">
-                    <h3>Project 2</h3>
-                    <p>Animated Portfolio Site</p>
-                    <a href="#" class="project-link">View Project</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <div id="floating-element">
-        <div id="astronaut-container1">
-            <img src="resources/space-astro.gif" alt="Astronaut">
-        </div>
+    <div class="body">
+      <div class="arm left" id="armLeft"></div>
+      <div class="chest-logo">A</div>
+      <div class="arm right" id="armRight"></div>
     </div>
+  </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
-    <script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
